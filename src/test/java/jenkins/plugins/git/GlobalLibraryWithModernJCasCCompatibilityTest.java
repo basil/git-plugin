@@ -36,6 +36,7 @@ import org.jvnet.hudson.test.RestartableJenkinsRule;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.AnyOf.anyOf;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -63,8 +64,9 @@ public class GlobalLibraryWithModernJCasCCompatibilityTest extends RoundTripAbst
         assertThat(gitSCMSource.getTraits(), hasSize(20));
         assertThat(gitSCMSource.getTraits(), containsInAnyOrder(
                 //Discover branches
-                allOf(
-                        instanceOf(BranchDiscoveryTrait.class)
+                anyOf(
+                        instanceOf(BranchDiscoveryTrait.class),
+                        instanceOf(org.jenkinsci.plugins.github_branch_source.BranchDiscoveryTrait.class)
                 ),
                 // Discover tags
                 allOf(
